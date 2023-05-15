@@ -13,6 +13,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      issues: write
+      pull-requests: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,7 +56,6 @@ jobs:
             ${ "${{ steps.terraform_plan.outcome }}" == "success" ? "\u2714" : "\u274c" } Terraform Plan 📖
             ${ "${{ steps.terraform_validate.outcome }}" == "success" ? "\u2714" : "\u274c" } Terraform Validation 🤖
 
-
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
@@ -70,7 +72,6 @@ jobs:
                     repo: context.repo.repo,
                     body: output
                     })
-      
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
